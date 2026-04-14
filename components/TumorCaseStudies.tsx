@@ -121,7 +121,7 @@ export default function TumorCaseStudies() {
               ref={(el) => {
                 if (el) casesRef.current[index] = el;
               }}
-              className="bg-navy/50 backdrop-blur-md border border-ice/20 rounded-2xl p-8 hover:border-ocean/40 transition-all duration-300"
+              className="bg-navy/50 backdrop-blur-md border border-ice/20 rounded-2xl p-8 hover:border-ocean/60 hover:bg-navy/70 hover:shadow-lg hover:shadow-ocean/20 transition-all duration-300 cursor-pointer"
             >
               {/* Case Header */}
               <div className="mb-6">
@@ -208,7 +208,7 @@ export default function TumorCaseStudies() {
               <p className="text-ice/70 font-medium">Detection Accuracy</p>
             </div>
             <div className="text-center">
-              <div className="text-5xl font-black text-sapphire mb-3">0.87</div>
+              <div className="text-5xl font-black text-ice mb-3">0.87</div>
               <p className="text-ice/70 font-medium">Avg Segmentation IoU</p>
             </div>
             <div className="text-center">
@@ -220,21 +220,21 @@ export default function TumorCaseStudies() {
 
         {/* Clinical Benefits */}
         <div className="mt-16 grid md:grid-cols-3 gap-8">
-          <div className="p-8 rounded-xl bg-navy/30 border border-ice/10 hover:border-royal/40 transition-all">
+          <div className="p-8 rounded-xl bg-navy/30 border border-ice/10 hover:border-royal/60 hover:bg-navy/50 hover:shadow-lg hover:shadow-royal/20 transition-all duration-300 cursor-pointer">
             <div className="text-4xl mb-4">🏥</div>
             <h4 className="text-xl font-bold text-ice mb-3">Surgical Planning</h4>
             <p className="text-ice/70">
               Precise tumor boundary segmentation enables accurate resection margins and eloquent cortex mapping
             </p>
           </div>
-          <div className="p-8 rounded-xl bg-navy/30 border border-ice/10 hover:border-ocean/40 transition-all">
+          <div className="p-8 rounded-xl bg-navy/30 border border-ice/10 hover:border-ocean/60 hover:bg-navy/50 hover:shadow-lg hover:shadow-ocean/20 transition-all duration-300 cursor-pointer">
             <div className="text-4xl mb-4">⚡</div>
             <h4 className="text-xl font-bold text-ice mb-3">Rapid Assessment</h4>
             <p className="text-ice/70">
               4-millisecond per-slice processing provides fast diagnosis to support immediate clinical decision-making
             </p>
           </div>
-          <div className="p-8 rounded-xl bg-navy/30 border border-ice/10 hover:border-sapphire/40 transition-all">
+          <div className="p-8 rounded-xl bg-navy/30 border border-ice/10 hover:border-sapphire/60 hover:bg-navy/50 hover:shadow-lg hover:shadow-sapphire/20 transition-all duration-300 cursor-pointer">
             <div className="text-4xl mb-4">📊</div>
             <h4 className="text-xl font-bold text-ice mb-3">Volumetry Analysis</h4>
             <p className="text-ice/70">

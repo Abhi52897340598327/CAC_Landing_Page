@@ -139,6 +139,13 @@ export default function SocialProof() {
 
           {/* Marquee */}
           <ReviewMarquee />
+
+          {/* Disclaimer */}
+          <div className="mt-12 text-center">
+            <p className="text-xs text-ice/50">
+              *These clinical reviews are fictional representations created for demonstration purposes. They do not represent actual clinician endorsements.
+            </p>
+          </div>
         </div>
 
         {/* Gradient Border */}
