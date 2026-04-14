@@ -1,23 +1,12 @@
 'use client';
 
-import React, { useRef, useEffect, useState, Suspense, lazy } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-
-// Use React.lazy for true client-side lazy loading
-const BrainCanvas = lazy(() => import('@/components/BrainCanvas'));
+import BrainScene from '@/components/BrainScene';
 
 gsap.registerPlugin(ScrollTrigger);
-
-// Loading fallback component
-function CanvasLoading() {
-  return (
-    <div className="w-full h-full bg-gradient-to-b from-navy via-navy to-sapphire flex items-center justify-center">
-      <div className="text-ice text-lg">Loading 3D scene...</div>
-    </div>
-  );
-}
 
 // Main Hero Component with Scroll Orchestration
 export default function Hero() {
@@ -75,13 +64,11 @@ export default function Hero() {
         className="absolute inset-0 w-full h-full"
       >
         {isReady && (
-          <Suspense fallback={<CanvasLoading />}>
-            <BrainCanvas
-              cuttingPlaneY={cuttingPlaneY}
-              cameraRotationX={cameraRotationX}
-              cameraPosZ={cameraPosZ}
-            />
-          </Suspense>
+          <BrainScene
+            cuttingPlaneY={cuttingPlaneY}
+            cameraRotationX={cameraRotationX}
+            cameraPosZ={cameraPosZ}
+          />
         )}
       </div>
 

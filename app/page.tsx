@@ -2,7 +2,7 @@
 
 import React, { Suspense, lazy } from 'react';
 
-// Lazy load all sections to prevent server-side rendering and React context issues
+// Lazy load Hero since it contains 3D rendering
 const Hero = lazy(() => import('@/components/Hero'));
 const AppLifecycle = lazy(() => import('@/components/AppLifecycle'));
 const TheTech = lazy(() => import('@/components/TheTech'));
