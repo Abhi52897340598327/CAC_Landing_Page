@@ -15,7 +15,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "incremental": true,
