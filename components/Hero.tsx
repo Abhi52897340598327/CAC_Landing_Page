@@ -84,11 +84,28 @@ export default function Hero() {
         <h1 className="text-7xl md:text-8xl font-black text-ice drop-shadow-2xl tracking-tight mb-6">
           NeuroLens
         </h1>
-        <p className="text-xl md:text-2xl text-ice/80 max-w-3xl text-center drop-shadow-lg">
-          Accessible neuro-oncology diagnostics powered by AI
+        <p className="text-xl md:text-2xl text-ice/80 max-w-3xl text-center drop-shadow-lg mb-8">
+          AI-Powered Precision Medicine for Brain Tumor Detection & Segmentation
         </p>
+        
+        {/* Real Performance Stats */}
+        <div className="grid grid-cols-3 gap-8 mb-12">
+          <div className="text-center">
+            <div className="text-4xl font-bold text-royal mb-2">96%</div>
+            <div className="text-sm text-ice/70">Classification Accuracy</div>
+          </div>
+          <div className="text-center">
+            <div className="text-4xl font-bold text-ocean mb-2">98%</div>
+            <div className="text-sm text-ice/70">Detection Accuracy</div>
+          </div>
+          <div className="text-center">
+            <div className="text-4xl font-bold text-sapphire mb-2">0.85</div>
+            <div className="text-sm text-ice/70">Segmentation IoU</div>
+          </div>
+        </div>
+
         <div className="absolute bottom-12 text-ice/60 animate-pulse">
-          <p className="text-sm">Scroll to explore</p>
+          <p className="text-sm">Scroll to explore real clinical examples</p>
           <svg
             className="w-5 h-5 mx-auto mt-2 animate-bounce"
             fill="none"

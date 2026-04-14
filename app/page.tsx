@@ -4,6 +4,8 @@ import React, { Suspense, lazy } from 'react';
 
 // Lazy load Hero since it contains 3D rendering
 const Hero = lazy(() => import('@/components/Hero'));
+const TumorTypeClassification = lazy(() => import('@/components/TumorTypeClassification'));
+const TumorCaseStudies = lazy(() => import('@/components/TumorCaseStudies'));
 const AppLifecycle = lazy(() => import('@/components/AppLifecycle'));
 const TheTech = lazy(() => import('@/components/TheTech'));
 const TheEdge = lazy(() => import('@/components/TheEdge'));
@@ -22,22 +24,32 @@ export default function Home() {
         <Hero />
       </Suspense>
 
-      {/* Section 2: App Lifecycle */}
+      {/* Section 2: Tumor Type Classification */}
+      <Suspense fallback={<SectionLoader />}>
+        <TumorTypeClassification />
+      </Suspense>
+
+      {/* Section 3: Real Case Studies */}
+      <Suspense fallback={<SectionLoader />}>
+        <TumorCaseStudies />
+      </Suspense>
+
+      {/* Section 4: App Lifecycle */}
       <Suspense fallback={<SectionLoader />}>
         <AppLifecycle />
       </Suspense>
 
-      {/* Section 3: The Tech */}
+      {/* Section 5: The Tech */}
       <Suspense fallback={<SectionLoader />}>
         <TheTech />
       </Suspense>
 
-      {/* Section 4: The Edge */}
+      {/* Section 6: The Edge */}
       <Suspense fallback={<SectionLoader />}>
         <TheEdge />
       </Suspense>
 
-      {/* Section 5: Social Proof & Footer */}
+      {/* Section 7: Social Proof & Footer */}
       <Suspense fallback={<SectionLoader />}>
         <SocialProof />
       </Suspense>

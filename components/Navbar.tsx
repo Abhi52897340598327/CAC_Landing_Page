@@ -29,15 +29,14 @@ export default function Navbar() {
         </div>
 
         {/* Right: View Demo Button */}
-        <button
-          className="px-6 py-2 bg-royal text-ice rounded-lg font-medium tracking-tight text-sm hover:bg-ocean transition-colors duration-300 shadow-lg hover:shadow-xl"
-          onClick={() => {
-            // Placeholder for demo link
-            console.log('Demo clicked');
-          }}
+        <a
+          href="/demo.mp4"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block px-6 py-2 bg-royal text-ice rounded-lg font-medium tracking-tight text-sm hover:bg-ocean transition-colors duration-300 shadow-lg hover:shadow-xl"
         >
           View Demo
-        </button>
+        </a>
       </div>
     </nav>
   );
