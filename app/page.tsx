@@ -1,14 +1,13 @@
 'use client';
 
-import React, { Suspense } from 'react';
-import dynamic from 'next/dynamic';
+import React, { Suspense, lazy } from 'react';
 
-// Dynamic imports with ssr: false to prevent server-side rendering of 3D components
-const Hero = dynamic(() => import('@/components/Hero'), { ssr: false });
-const AppLifecycle = dynamic(() => import('@/components/AppLifecycle'), { ssr: false });
-const TheTech = dynamic(() => import('@/components/TheTech'), { ssr: false });
-const TheEdge = dynamic(() => import('@/components/TheEdge'), { ssr: false });
-const SocialProof = dynamic(() => import('@/components/SocialProof'), { ssr: false });
+// Lazy load all sections to prevent server-side rendering and React context issues
+const Hero = lazy(() => import('@/components/Hero'));
+const AppLifecycle = lazy(() => import('@/components/AppLifecycle'));
+const TheTech = lazy(() => import('@/components/TheTech'));
+const TheEdge = lazy(() => import('@/components/TheEdge'));
+const SocialProof = lazy(() => import('@/components/SocialProof'));
 
 // Loading fallback
 function SectionLoader() {

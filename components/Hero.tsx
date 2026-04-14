@@ -1,18 +1,23 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
+import React, { useRef, useEffect, useState, Suspense, lazy } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 
-// Dynamic import of canvas to prevent server-side render and React context issues
-const BrainCanvas = dynamic(() => import('@/components/BrainCanvas'), {
-  ssr: false,
-  loading: () => <div className="w-full h-screen bg-navy" />,
-});
+// Use React.lazy for true client-side lazy loading
+const BrainCanvas = lazy(() => import('@/components/BrainCanvas'));
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Loading fallback component
+function CanvasLoading() {
+  return (
+    <div className="w-full h-full bg-gradient-to-b from-navy via-navy to-sapphire flex items-center justify-center">
+      <div className="text-ice text-lg">Loading 3D scene...</div>
+    </div>
+  );
+}
 
 // Main Hero Component with Scroll Orchestration
 export default function Hero() {
@@ -70,11 +75,13 @@ export default function Hero() {
         className="absolute inset-0 w-full h-full"
       >
         {isReady && (
-          <BrainCanvas
-            cuttingPlaneY={cuttingPlaneY}
-            cameraRotationX={cameraRotationX}
-            cameraPosZ={cameraPosZ}
-          />
+          <Suspense fallback={<CanvasLoading />}>
+            <BrainCanvas
+              cuttingPlaneY={cuttingPlaneY}
+              cameraRotationX={cameraRotationX}
+              cameraPosZ={cameraPosZ}
+            />
+          </Suspense>
         )}
       </div>
 
