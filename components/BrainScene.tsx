@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 interface BrainSceneProps {
@@ -9,12 +9,44 @@ interface BrainSceneProps {
   cameraPosZ: number;
 }
 
+// Tumor data representing real NeuroLens detections
+const TUMOR_SCENARIOS = [
+  {
+    name: 'Glioma',
+    position: { x: -0.3, y: 0.2, z: 0.1 },
+    size: { x: 0.6, y: 0.7, z: 0.5 },
+    color: 0xff6b6b, // Red for aggressive tumor
+    emissive: 0xff0000,
+    intensity: 0.8,
+    opacity: 0.7,
+  },
+  {
+    name: 'Meningioma',
+    position: { x: 0.4, y: -0.3, z: 0.2 },
+    size: { x: 0.5, y: 0.5, z: 0.4 },
+    color: 0xffd93d, // Yellow for well-defined tumor
+    emissive: 0xffaa00,
+    intensity: 0.6,
+    opacity: 0.75,
+  },
+  {
+    name: 'Pituitary',
+    position: { x: 0, y: -0.8, z: 0 },
+    size: { x: 0.3, y: 0.4, z: 0.3 },
+    color: 0x6bcaff, // Blue for pituitary
+    emissive: 0x0088ff,
+    intensity: 0.7,
+    opacity: 0.8,
+  },
+];
+
 export default function BrainScene({
   cuttingPlaneY,
   cameraRotationX,
   cameraPosZ,
 }: BrainSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [currentTumorIndex, setCurrentTumorIndex] = useState(0);
   const sceneRef = useRef<{
     scene: THREE.Scene;
     camera: THREE.PerspectiveCamera;
@@ -22,6 +54,7 @@ export default function BrainScene({
     brainMesh: THREE.Group;
     cuttingPlane: THREE.Mesh;
     torusRing: THREE.Mesh;
+    tumorMeshes: THREE.Mesh[];
   } | null>(null);
 
   useEffect(() => {
@@ -74,6 +107,88 @@ export default function BrainScene({
     brainSphere.castShadow = true;
     brainMesh.add(brainSphere);
 
+    // Create tumor meshes based on current scenario
+    const tumorMeshes: THREE.Mesh[] = [];
+    const currentTumor = TUMOR_SCENARIOS[currentTumorIndex];
+    
+    // Tumor representation (using rounded boxes to simulate tumor shapes)
+    const tumorGeometry = new THREE.BoxGeometry(
+      currentTumor.size.x,
+      currentTumor.size.y,
+      currentTumor.size.z,
+      8,
+      8,
+      8
+    );
+    
+    const tumorMaterial = new THREE.MeshStandardMaterial({
+      color: currentTumor.color,
+      emissive: currentTumor.emissive,
+      emissiveIntensity: currentTumor.intensity,
+      transparent: true,
+      opacity: currentTumor.opacity,
+      metalness: 0.3,
+      roughness: 0.4,
+    });
+    
+    const tumorMesh = new THREE.Mesh(tumorGeometry, tumorMaterial);
+    tumorMesh.position.set(
+      currentTumor.position.x,
+      currentTumor.position.y,
+      currentTumor.position.z
+    );
+    tumorMesh.castShadow = true;
+    brainMesh.add(tumorMesh);
+    tumorMeshes.push(tumorMesh);
+
+    // Glow effect around tumor
+    const glowGeometry = new THREE.BoxGeometry(
+      currentTumor.size.x * 1.3,
+      currentTumor.size.y * 1.3,
+      currentTumor.size.z * 1.3,
+      6,
+      6,
+      6
+    );
+    
+    const glowMaterial = new THREE.MeshBasicMaterial({
+      color: currentTumor.color,
+      transparent: true,
+      opacity: 0.15,
+      depthWrite: false,
+    });
+    
+    const glowMesh = new THREE.Mesh(glowGeometry, glowMaterial);
+    glowMesh.position.set(
+      currentTumor.position.x,
+      currentTumor.position.y,
+      currentTumor.position.z
+    );
+    brainMesh.add(glowMesh);
+
+    // Segmentation boundary visualization (as wireframe)
+    const boundaryGeometry = new THREE.BoxGeometry(
+      currentTumor.size.x * 1.15,
+      currentTumor.size.y * 1.15,
+      currentTumor.size.z * 1.15
+    );
+    
+    const boundaryMaterial = new THREE.MeshBasicMaterial({
+      wireframe: true,
+      color: currentTumor.color,
+      transparent: true,
+      opacity: 0.6,
+      depthWrite: false,
+    });
+    
+    const boundaryMesh = new THREE.Mesh(boundaryGeometry, boundaryMaterial);
+    boundaryMesh.position.set(
+      currentTumor.position.x,
+      currentTumor.position.y,
+      currentTumor.position.z
+    );
+    brainMesh.add(boundaryMesh);
+
     // Cutting plane
     const planeGeometry = new THREE.PlaneGeometry(4, 4);
     const planeMaterial = new THREE.MeshStandardMaterial({
@@ -106,6 +221,7 @@ export default function BrainScene({
       brainMesh,
       cuttingPlane,
       torusRing,
+      tumorMeshes,
     };
 
     // Mouse tracking
@@ -134,8 +250,11 @@ export default function BrainScene({
 
     // Animation loop
     let frameId: number;
+    let tumorRotationTime = 0;
+    
     const animate = () => {
       frameId = requestAnimationFrame(animate);
+      tumorRotationTime += 0.016; // ~60fps
 
       // Apply scroll-driven updates
       cuttingPlane.position.y = cuttingPlaneY;
@@ -147,6 +266,25 @@ export default function BrainScene({
 
       // Auto-rotate if no scroll happening
       brainMesh.rotation.z += 0.0005;
+
+      // Animate tumor meshes
+      if (sceneRef.current && sceneRef.current.tumorMeshes) {
+        sceneRef.current.tumorMeshes.forEach((mesh, index) => {
+          // Rotate tumors
+          mesh.rotation.x += 0.003;
+          mesh.rotation.y += 0.004;
+          
+          // Pulsing animation
+          const pulse = 0.95 + Math.sin(tumorRotationTime + index) * 0.05;
+          mesh.scale.set(pulse, pulse, pulse);
+        });
+        
+        // Cycle through tumor types every 8 seconds
+        const shouldCycleTumor = Math.floor(tumorRotationTime / 8) !== Math.floor((tumorRotationTime - 0.016) / 8);
+        if (shouldCycleTumor) {
+          setCurrentTumorIndex((prev) => (prev + 1) % TUMOR_SCENARIOS.length);
+        }
+      }
 
       renderer.render(scene, camera);
     };
@@ -167,7 +305,7 @@ export default function BrainScene({
       torusGeometry.dispose();
       torusMaterial.dispose();
     };
-  }, [cuttingPlaneY, cameraRotationX, cameraPosZ]);
+  }, [cuttingPlaneY, cameraRotationX, cameraPosZ, currentTumorIndex]);
 
   return (
     <div
