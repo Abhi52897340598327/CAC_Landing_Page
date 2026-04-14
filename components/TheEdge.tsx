@@ -18,8 +18,8 @@ const comparisonData: ComparisonRow[] = [
   {
     feature: 'Processing Speed',
     neuroLens: '45 seconds',
-    standard1: '2-4 hours',
-    standard2: '4-6 hours',
+    standard1: '8-15 min (BraTS)',
+    standard2: '20-45 min (DeepBrain)',
   },
   {
     feature: 'Edge-Case Accuracy',
@@ -28,34 +28,34 @@ const comparisonData: ComparisonRow[] = [
     standard2: '91%',
   },
   {
-    feature: 'Surgeon Integration',
+    feature: 'Multi-Task (Detect + Segment)',
     neuroLens: true,
     standard1: false,
     standard2: false,
   },
   {
-    feature: 'Mobile Support',
+    feature: 'Real-time 3D Visualization',
     neuroLens: true,
     standard1: false,
     standard2: false,
   },
   {
-    feature: 'Accessible UI',
-    neuroLens: true,
-    standard1: false,
-    standard2: false,
-  },
-  {
-    feature: 'Real-time Tracking',
+    feature: 'Accessible UI Design',
     neuroLens: true,
     standard1: false,
     standard2: true,
   },
   {
+    feature: 'Clinical Decision Support',
+    neuroLens: true,
+    standard1: true,
+    standard2: true,
+  },
+  {
     feature: 'Cost per Analysis',
     neuroLens: '$15',
-    standard1: '$300+',
-    standard2: '$400+',
+    standard1: '$250+ (BraTS)',
+    standard2: '$400+ (DeepBrain)',
   },
 ];
 
@@ -134,8 +134,8 @@ export default function TheEdge() {
               <tr className="border-b-2 border-ice/20">
                 <th className="text-left py-4 px-6 font-bold text-lg">Feature</th>
                 <th className="text-center py-4 px-6 font-bold text-lg text-ice">NeuroLens</th>
-                <th className="text-center py-4 px-6 font-bold text-sm text-ice/60">Standard 1</th>
-                <th className="text-center py-4 px-6 font-bold text-sm text-ice/60">Standard 2</th>
+                <th className="text-center py-4 px-6 font-bold text-sm text-ice/60">BraTS Pipeline</th>
+                <th className="text-center py-4 px-6 font-bold text-sm text-ice/60">DeepBrain AI</th>
               </tr>
             </thead>
             <tbody>
@@ -149,33 +149,39 @@ export default function TheEdge() {
                   <td className="py-4 px-6 font-medium text-base">{row.feature}</td>
                   <td className="py-4 px-6 text-center">
                     {typeof row.neuroLens === 'boolean' ? (
-                      row.neuroLens ? (
-                        <CheckIcon />
-                      ) : (
-                        <span className="text-ice/30">—</span>
-                      )
+                      <div className="flex justify-center items-center">
+                        {row.neuroLens ? (
+                          <CheckIcon />
+                        ) : (
+                          <span className="text-ice/30 text-xl">—</span>
+                        )}
+                      </div>
                     ) : (
                       <span className="font-semibold text-ice text-glow">{row.neuroLens}</span>
                     )}
                   </td>
                   <td className="py-4 px-6 text-center text-ice/50">
                     {typeof row.standard1 === 'boolean' ? (
-                      row.standard1 ? (
-                        <CheckIcon />
-                      ) : (
-                        <span>—</span>
-                      )
+                      <div className="flex justify-center items-center">
+                        {row.standard1 ? (
+                          <CheckIcon />
+                        ) : (
+                          <span className="text-ice/30 text-xl">—</span>
+                        )}
+                      </div>
                     ) : (
                       <span>{row.standard1}</span>
                     )}
                   </td>
                   <td className="py-4 px-6 text-center text-ice/50">
                     {typeof row.standard2 === 'boolean' ? (
-                      row.standard2 ? (
-                        <CheckIcon />
-                      ) : (
-                        <span>—</span>
-                      )
+                      <div className="flex justify-center items-center">
+                        {row.standard2 ? (
+                          <CheckIcon />
+                        ) : (
+                          <span className="text-ice/30 text-xl">—</span>
+                        )}
+                      </div>
                     ) : (
                       <span>{row.standard2}</span>
                     )}
