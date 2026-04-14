@@ -1,0 +1,35 @@
+{
+  "name": "cac_landing_page",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abhi52897340598327/CAC_Landing_Page.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Abhi52897340598327/CAC_Landing_Page/issues"
+  },
+  "homepage": "https://github.com/Abhi52897340598327/CAC_Landing_Page#readme",
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.0",
+    "@studio-freight/react-lenis": "^0.0.47",
+    "autoprefixer": "^10.5.0",
+    "gsap": "^3.15.0",
+    "next": "^16.2.3",
+    "postcss": "^8.5.9",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^4.2.2",
+    "three": "^0.183.2"
+  }
+}
