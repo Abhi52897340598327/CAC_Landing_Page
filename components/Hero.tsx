@@ -76,16 +76,20 @@ function CameraController({ rotationX, posZ }: { rotationX: number; posZ: number
 
   useFrame(() => {
     // Smooth camera positioning
-    camera.position.z = gsap.utils.interpolate(camera.position.z, posZ, 0.1);
-    camera.rotation.x = gsap.utils.interpolate(camera.rotation.x, rotationX, 0.1);
+    if (camera.position.z !== posZ) {
+      camera.position.z = gsap.utils.interpolate(camera.position.z, posZ, 0.08);
+    }
+    if (camera.rotation.x !== rotationX) {
+      camera.rotation.x = gsap.utils.interpolate(camera.rotation.x, rotationX, 0.08);
+    }
     camera.updateProjectionMatrix();
   });
 
   return null;
 }
 
-// Main 3D Canvas Component
-function BrainScene({ cuttingPlaneY, cameraRotationX, cameraPosZ }: BrainSceneProps) {
+// Wrapped Canvas Component
+const BrainCanvasWrapper = React.memo(({ cuttingPlaneY, cameraRotationX, cameraPosZ }: BrainSceneProps) => {
   return (
     <Canvas
       camera={{ position: [0, 0, 3.5], fov: 50 }}
@@ -121,7 +125,7 @@ function BrainScene({ cuttingPlaneY, cameraRotationX, cameraPosZ }: BrainScenePr
       />
     </Canvas>
   );
-}
+});
 
 // Main Hero Component with Scroll Orchestration
 export default function Hero() {
@@ -172,7 +176,7 @@ export default function Hero() {
         ref={canvasContainerRef}
         className="absolute inset-0 w-full h-full"
       >
-        <BrainScene 
+        <BrainCanvasWrapper 
           cuttingPlaneY={cuttingPlaneY}
           cameraRotationX={cameraRotationX}
           cameraPosZ={cameraPosZ}
