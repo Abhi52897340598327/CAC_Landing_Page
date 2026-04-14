@@ -19,6 +19,12 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    },
     "plugins": [
       {
         "name": "next"
