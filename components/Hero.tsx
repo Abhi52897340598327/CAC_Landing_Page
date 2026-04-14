@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
 import { useGSAP } from '@gsap/react';
@@ -89,7 +89,7 @@ function CameraController({ rotationX, posZ }: { rotationX: number; posZ: number
 }
 
 // Wrapped Canvas Component
-const BrainCanvasWrapper = React.memo(({ cuttingPlaneY, cameraRotationX, cameraPosZ }: BrainSceneProps) => {
+const BrainCanvasWrapper = ({ cuttingPlaneY, cameraRotationX, cameraPosZ }: BrainSceneProps) => {
   return (
     <Canvas
       camera={{ position: [0, 0, 3.5], fov: 50 }}
@@ -125,7 +125,7 @@ const BrainCanvasWrapper = React.memo(({ cuttingPlaneY, cameraRotationX, cameraP
       />
     </Canvas>
   );
-});
+};
 
 // Main Hero Component with Scroll Orchestration
 export default function Hero() {
